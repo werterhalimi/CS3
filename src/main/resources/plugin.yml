@@ -1,0 +1,10 @@
+name: CS3
+version: '${project.version}'
+main: ch.shai.cs3.Main
+api-version: '1.19'
+commands:
+  myfill:
+  gentree:
+  gif:
+  genworld:
+  tpx:
