@@ -10,23 +10,28 @@
     <packaging>jar</packaging>
 
     <name>CS3</name>
-
+    <!-- Java Version -->
     <properties>
-        <java.version>1.8</java.version>
+
+        <java.version>21</java.version> <!-- ✅ Correct -->
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
         <plugins>
+            <!-- Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
+
+            <!-- Shade Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -44,6 +49,8 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <!-- Resources -->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -52,16 +59,14 @@
         </resources>
     </build>
 
-
     <repositories>
-        <repository>
-            <id>mohistmc-repo</id>
-            <url>https://maven.mohistmc.com/</url>
-        </repository>
+        <!-- PaperMC is used by default, you can change it to SpigotMC or Bukkit (Don't forget to change the dependency) -->
         <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
+
+        <!-- Sonatype is used for snapshot versions -->
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
@@ -70,25 +75,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.mohistmc</groupId>
-            <artifactId>mohistdev</artifactId>
-            <version>1.20.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>example-artifact</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>/home/shai/valentin-minecraft/mod/mods/cgm-forge-1.19.4-1.3.7.jar</systemPath>
-        </dependency>
-
-
-
-        <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
+            <version>1.21.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

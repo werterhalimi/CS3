@@ -1,12 +1,13 @@
 package ch.shai.cs3.game.state.rule.sample;
 
+import ch.shai.cs3.game.player.GamePlayer;
 import ch.shai.cs3.game.state.rule.GameStateRule;
+import ch.shai.cs3.game.team.GameTeam;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-public class NoBlockRule extends GameStateRule implements Listener {
+public class NoBlockRule<T extends GamePlayer, U extends GameTeam> extends GameStateRule<T, U> {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event){
@@ -16,15 +17,5 @@ public class NoBlockRule extends GameStateRule implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event){
         event.setCancelled(true);
-    }
-
-    @Override
-    public void onLoad() {
-        this.getState().getGame().registerEvent(this);
-    }
-
-    @Override
-    public void unLoad() {
-        this.getState().getGame().unRegisterEvent(this);
     }
 }

@@ -1,0 +1,29 @@
+services:
+#  builder_dev:
+#    depends_on:
+#      - server_dev
+#    command: mvn package ; mv /app/target/CS3-1.0-SNAPSHOT.jar /data/plugins/
+#    volumes:
+#      - server_dev:/data/plugins/
+#      - server_dev:/root/.m2
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      target: base
+#    develop:
+#        watch:
+#            - action: sync+restart
+#              path: .
+#              target: /app
+
+
+  server_dev:
+    ports:
+      - 25565:25565
+    environment:
+      MEMORYSIZE: "1G"
+      PAPERMC_FLAGS: ""
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: server

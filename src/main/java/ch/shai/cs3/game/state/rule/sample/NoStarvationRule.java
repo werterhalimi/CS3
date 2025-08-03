@@ -4,14 +4,11 @@ import ch.shai.cs3.game.player.GamePlayer;
 import ch.shai.cs3.game.state.rule.GameStateRule;
 import ch.shai.cs3.game.team.GameTeam;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 
-public class NoDamageRule<T extends GamePlayer, U extends GameTeam> extends GameStateRule<T,U> {
-
+public class NoStarvationRule<T extends GamePlayer, U extends GameTeam> extends GameStateRule<T,U> {
     @EventHandler
-    public void onEntityDamage(EntityDamageEvent event){
+    public void onPlayerStave(FoodLevelChangeEvent event){
         event.setCancelled(true);
     }
-
 }

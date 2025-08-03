@@ -1,7 +1,6 @@
 package ch.shai.cs3.commands;
 
 import ch.shai.cs3.utils.parsing.ParsingSlot;
-import ch.shai.cs3.utils.parsing.ParsingSlotInt;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 
 public abstract class CSCommand implements CommandExecutor {
 
+    protected boolean isAdmin = false;
     private ParsingSlot slots[];
     public CSCommand(ParsingSlot... slots){
         this.slots = slots;
@@ -33,6 +33,9 @@ public abstract class CSCommand implements CommandExecutor {
     }
 
 
+    protected void setAdmin(boolean isAdmin){
+        this.isAdmin = isAdmin;
+    }
 
     public void fillValues(String args[]) throws ParseException {
         for (int i = 0; i < args.length - 1; i++) {
