@@ -64,6 +64,10 @@ public abstract class CSCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String name, @NotNull String[] args) {
+        if (this.isAdmin && !sender.isOp()) {
+            sender.sendMessage("Vous n'avez pas le droit de faire ca");
+            return false;
+        }
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Location location = player.getLocation();
