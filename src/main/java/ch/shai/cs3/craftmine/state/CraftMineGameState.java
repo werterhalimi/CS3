@@ -19,7 +19,6 @@ public class CraftMineGameState extends GameState<CraftMineGamePlayer, CraftMine
 
     @Override
     public void onLoad() {
-        Bukkit.broadcastMessage("CraftMine game state load");
         for (CraftMineGamePlayer player : this.game.getPlayers()) {
             player.getBukkitPlayer().teleport(player.getTeam().getSpawnPoint());
         }
