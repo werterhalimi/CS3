@@ -1,7 +1,6 @@
 package ch.shai.cs3.game.team;
 
 import ch.shai.cs3.game.player.GamePlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 
@@ -33,6 +32,13 @@ public abstract class GameTeam {
         return this.spawn;
     }
 
+    public void setSpawnPoint(Location spawnPoint){
+        this.spawn = spawnPoint;
+        for (GamePlayer player : this.players) {
+            player.getBukkitPlayer().setRespawnLocation(this.spawn);
+        }
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -43,7 +49,7 @@ public abstract class GameTeam {
 
     public void addPlayer(GamePlayer player){
         this.players.add(player);
-
+        player.getBukkitPlayer().setRespawnLocation(this.spawn);
     }
     public boolean isFull(){
 
