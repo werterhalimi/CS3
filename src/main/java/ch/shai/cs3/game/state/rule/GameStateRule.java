@@ -26,9 +26,10 @@ public abstract class GameStateRule<T extends GamePlayer, U extends GameTeam> im
         this.onLoad();
     };
 
-    protected void addDependencies(GameStateRule<T,U> dep){
+    public GameStateRule<T, U> addDependencies(GameStateRule<T, U> dep){
         this.dependencies.add(dep);
         dep.load(this.state);
+        return this;
     }
 
     public void onLoad() {}
