@@ -87,7 +87,7 @@ public abstract class Game<
         int index = this.states.indexOf(this.currentState);
         if (index != -1 && index != this.states.size()) // todo throw error
             return this.states.get(index + 1);
-        return null;
+        return this.getStates().get(0);
     }
 
     public List<U> getTeams() {
