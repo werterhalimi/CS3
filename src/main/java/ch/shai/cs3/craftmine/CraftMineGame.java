@@ -15,8 +15,9 @@ public class CraftMineGame extends Game<CraftMineGamePlayer, CraftMineGameTeam> 
         super(plugin);
         this.addState(new HubGameState<CraftMineGamePlayer, CraftMineGameTeam>(this.getWorld().getSpawnLocation().add(0,40,0),new HubGameStateOption()));
         this.addState(new CraftMineGameState());
-        this.teams.add(new CraftMineGameTeam("Shai", DyeColor.RED, this.getWorld().getSpawnLocation()));
-//        this.teams.add(new CraftMineGameTeam("Jordan", DyeColor.BLUE, this.getWorld().getSpawnLocation()));
+        this.teams.add(new CraftMineGameTeam("Les verts !", DyeColor.GREEN,this.getWorld().getSpawnLocation() ));
+        this.teams.add(new CraftMineGameTeam("Les bleus !", DyeColor.BLUE,this.getWorld().getSpawnLocation() ));
+        this.teams.add(new CraftMineGameTeam("Les jaunes !", DyeColor.YELLOW, this.getWorld().getSpawnLocation()));
     }
 
 
