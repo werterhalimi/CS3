@@ -23,8 +23,9 @@ public class PlayerJoinLobbyRule<T extends GamePlayer, U extends GameTeam> exten
     public void onPLayerJoin(PlayerJoinEvent event){
         GamePlayer player = this.getState().getGame().registerPlayer(event.getPlayer());
         player.getBukkitPlayer().teleport(this.spawn);
-        if (this.shouldStartWhenEnoughPlayer && this.getState().getGame().getPlayers().size() >= this.minimumPlayerNeeded)
-            this.getState().getGame().setState(this.getState().getGame().getNextState());
+        if (this.getState().getGame().getPlayers().size() >= this.minimumPlayerNeeded && this.shouldStartWhenEnoughPlayer) {
+            this.getState().getGame().endCurrentState();
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package ch.shai.cs3.game;
 
+import ch.shai.cs3.commands.StartCommand;
 import ch.shai.cs3.game.player.GamePlayer;
 import ch.shai.cs3.game.state.GameState;
 import ch.shai.cs3.game.team.GameTeam;
@@ -43,6 +44,15 @@ public abstract class Game<
         this.teams = new ArrayList<>();
         this.players = new ArrayList<>();
         this.world = Bukkit.getWorlds().get(0);
+        Bukkit.getPluginCommand("start").setExecutor(new StartCommand<T,U>(this));
+    }
+
+    public void enable(){
+        this.setState(this.states.get(0));
+    }
+
+    public void endCurrentState(){
+        this.setState(this.getNextState());
     }
 
     public void addState(GameState state){

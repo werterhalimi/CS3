@@ -23,7 +23,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        new CraftMineGame(this).start();
+        new CraftMineGame(this).enable();
 //        getServer().getPluginManager().registerEvents(new PlayerInteract(), this);
 //        registerCommand(new MyFill(), "myfill");
 //        registerCommand(new GenTree(), "gentree");
