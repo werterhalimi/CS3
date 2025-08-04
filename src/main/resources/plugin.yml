@@ -6,3 +6,5 @@ author: PaperMC
 website: https://papermc.io
 api-version: '1.21.8'
 load: POSTWORLD
+commands:
+  start:
