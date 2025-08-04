@@ -7,10 +7,12 @@ import org.bukkit.entity.Player;
 public abstract class GamePlayer {
     protected Player player;
     protected Game<GamePlayer, GameTeam> game;
+    protected boolean isPlaying;
 
     public GamePlayer(Player player, Game<GamePlayer, GameTeam> game) {
         this.player = player;
         this.game = game;
+        this.isPlaying = true;
     }
 
     public Player getBukkitPlayer() {
@@ -31,4 +33,11 @@ public abstract class GamePlayer {
         team.addPlayer(this);
     }
 
+    public void setPlaying(boolean newVal){
+        this.isPlaying = newVal;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
 }
