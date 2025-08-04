@@ -23,7 +23,9 @@ public class HubGameState<T extends GamePlayer,U extends GameTeam> extends GameS
         this.rules.add(new NoStarvationRule<T,U>());
         this.rules.add(new ChooseTeamRule<T,U>());
         this.rules.add(new UnregisterPlayerLeave<T,U>());
-        this.rules.add(new PlayerJoinLobbyRule<T,U>(this.spawn).setShouldStartWhenEnoughPlayer(this.options.isSolo).setMinimumPlayerNeeded(this.options.numberOfPlayerToStart));
+        this.rules.add(new PlayerJoinLobbyRule<T,U>(this.spawn)
+                .setShouldStartWhenEnoughPlayer(this.options.shouldAutoStartWhenEnoughPlayer)
+                .setMinimumPlayerNeeded(this.options.numberOfPlayerToStart));
     }
 
     @Override
