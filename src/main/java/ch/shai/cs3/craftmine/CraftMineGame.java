@@ -19,9 +19,7 @@ public class CraftMineGame extends Game<CraftMineGamePlayer, CraftMineGameTeam> 
 //        this.teams.add(new CraftMineGameTeam("Jordan", DyeColor.BLUE, this.getWorld().getSpawnLocation()));
     }
 
-    public void start(){
-        this.setState(this.getStates().get(0));
-    }
+
 
     public CraftMineGamePlayer registerPlayer(Player player) {
         CraftMineGamePlayer gamePlayer = new CraftMineGamePlayer(player, this);
