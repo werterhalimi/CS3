@@ -8,6 +8,30 @@ import org.bukkit.World;
 public class SquareStructure {
 
 
+    public static void createFilledCube(Location loc1, Location loc2, Material type) {
+        World world = loc1.getWorld();
+        if (world == null || !world.equals(loc2.getWorld())) {
+            throw new IllegalArgumentException("Les emplacements doivent être dans le même monde");
+        }
+
+        // Détermine les limites du cube
+        int minX = Math.min(loc1.getBlockX(), loc2.getBlockX());
+        int maxX = Math.max(loc1.getBlockX(), loc2.getBlockX());
+        int minY = Math.min(loc1.getBlockY(), loc2.getBlockY());
+        int maxY = Math.max(loc1.getBlockY(), loc2.getBlockY());
+        int minZ = Math.min(loc1.getBlockZ(), loc2.getBlockZ());
+        int maxZ = Math.max(loc1.getBlockZ(), loc2.getBlockZ());
+
+        // Parcourt tous les blocs dans le volume et définit le type
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                for (int z = minZ; z <= maxZ; z++) {
+                    world.getBlockAt(x, y, z).setType(type, false);
+                }
+            }
+        }
+    }
+
     public static void createEmptyCube(Location loc1, Location loc2, Material type){
         World world = loc1.getWorld();
         if (world == null || !world.equals(loc2.getWorld())) {
@@ -43,6 +67,28 @@ public class SquareStructure {
             for (int z = minZ + 1; z < maxZ; z++) {
                 world.getBlockAt(minX, y, z).setType(type, false);
                 world.getBlockAt(maxX, y, z).setType(type, false);
+            }
+        }
+    }
+
+
+    public static void createRoom(Location loc1, Location loc2, Material wallMaterial) {
+        createEmptyCube(loc1, loc2, wallMaterial);
+        World world = loc1.getWorld();
+
+
+        int minX = Math.min(loc1.getBlockX(), loc2.getBlockX());
+        int maxX = Math.max(loc1.getBlockX(), loc2.getBlockX());
+        int minY = Math.min(loc1.getBlockY(), loc2.getBlockY());
+        int maxY = Math.max(loc1.getBlockY(), loc2.getBlockY());
+        int minZ = Math.min(loc1.getBlockZ(), loc2.getBlockZ());
+        int maxZ = Math.max(loc1.getBlockZ(), loc2.getBlockZ());
+
+        for (int x = minX + 1; x < maxX; x++) {
+            for (int y = minY + 1; y < maxY; y++) {
+                for (int z = minZ + 1; z < maxZ; z++) {
+                    world.getBlockAt(x, y, z).setType(Material.AIR, false);
+                }
             }
         }
     }
