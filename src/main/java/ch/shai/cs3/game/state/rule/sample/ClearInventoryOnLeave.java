@@ -6,11 +6,11 @@ import ch.shai.cs3.game.team.GameTeam;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class UnregisterPlayerLeave<T extends GamePlayer, U extends GameTeam>  extends GameStateRule<T, U> {
-
+public class ClearInventoryOnLeave<T extends GamePlayer, U extends GameTeam> extends GameStateRule<T,U> {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event){
-        T player = this.state.getGame().getGamePlayer(event.getPlayer());
+        event.getPlayer().getInventory().clear();
+        T player = this.getState().getGame().getGamePlayer(event.getPlayer());
         if (player != null) {
             this.getState().getGame().unRegisterPlayer(player);
         }
