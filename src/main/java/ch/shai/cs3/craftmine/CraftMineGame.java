@@ -22,6 +22,12 @@ public class CraftMineGame extends Game<CraftMineGamePlayer, CraftMineGameTeam> 
         this.teams.add(new CraftMineGameTeam("Les jaunes !", DyeColor.YELLOW, this.getWorld().getSpawnLocation()));
     }
 
+    @Override
+    public CraftMineGameTeam createTeam() {
+        CraftMineGameTeam team = new CraftMineGameTeam(null, null, this.getWorld().getSpawnLocation());
+        this.teams.add(team);
+        return team;
+    }
 
 
     public CraftMineGamePlayer registerPlayer(Player player) {
@@ -33,5 +39,8 @@ public class CraftMineGame extends Game<CraftMineGamePlayer, CraftMineGameTeam> 
 
     public void unRegisterPlayer(CraftMineGamePlayer player) {
         this.players.remove(player);
+        if (player.getTeam() != null) {
+            player.getTeam().removePlayer(player);
+        }
     }
 }
