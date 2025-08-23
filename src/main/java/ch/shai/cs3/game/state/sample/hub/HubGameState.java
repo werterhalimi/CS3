@@ -22,6 +22,8 @@ public class HubGameState<T extends GamePlayer,U extends GameTeam> extends GameS
         this.rules.add(new NoDamageRule<T,U>());
         this.rules.add(new NoStarvationRule<T,U>());
         this.rules.add(new ChooseTeamRule<T,U>());
+        this.rules.add(new PreventDaylightCycleRule<T,U>());
+        this.rules.add(new ClearInventoryOnLeave<T,U>());
         this.rules.add(new UnregisterPlayerLeave<T,U>());
         this.rules.add(new PlayerJoinLobbyRule<T,U>(this.spawn)
                 .setShouldStartWhenEnoughPlayer(this.options.shouldAutoStartWhenEnoughPlayer)
@@ -30,7 +32,6 @@ public class HubGameState<T extends GamePlayer,U extends GameTeam> extends GameS
 
     @Override
     public void onLoad() {
-        Bukkit.broadcastMessage("Hub game state load");
         if (!this.options.preventLobbyStructureGeneration) {
             int y = (this.spawn.getBlockY() - 2);
             SquareStructure.createEmptyCube(
