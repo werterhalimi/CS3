@@ -18,7 +18,7 @@ public class CraftMineGamePlayer extends GamePlayer {
     public void setInventoryValue(double inventoryValue) {
         this.inventoryValue = inventoryValue;
         this.player.sendActionBar("Valeur de l'inventaire: " + this.inventoryValue);
-        this.player.sendMessage("Valeur de l'inventaire: " + this.inventoryValue);
+        this.sendMessage("Valeur de l'inventaire: " + this.inventoryValue);
     }
 
 }
