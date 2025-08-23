@@ -33,16 +33,10 @@ public abstract class Game<
 
 
 
-    public Game(JavaPlugin plugin, GameState<T,U> currentState, String name) {
-        this.plugin = plugin;
-        this.currentState = currentState;
-        this.states = new ArrayList<>();
-        this.teams = new ArrayList<>();
-        this.players = new ArrayList<>();
-        this.states.add(this.currentState);
-        this.world = Bukkit.getWorlds().get(0);
+    public Game(JavaPlugin plugin, String name) {
+        this(plugin);
         this.name = name;
-        this.prefixComponent = MiniMessage.miniMessage().deserialize("<gray>[<gold>" + this.getName() + "<gray>]</gray>: </white>");
+        this.prefixComponent = MiniMessage.miniMessage().deserialize("<gray>[<gold>" + this.getName() + "<gray>]</gray>:");
     }
 
     public Game(JavaPlugin plugin) {
