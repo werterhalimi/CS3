@@ -17,14 +17,15 @@ public class HubGameState<T extends GamePlayer,U extends GameTeam> extends GameS
     public HubGameState(Location spawn, HubGameStateOption options){
         this.spawn = spawn;
         this.options = options;
-        this.rules.add(new NoBlockRule<T,U>());
-        this.rules.add(new NoDamageRule<T,U>());
-        this.rules.add(new NoStarvationRule<T,U>());
-        this.rules.add(new ChooseTeamRule<T,U>());
-        this.rules.add(new PreventDaylightCycleRule<T,U>());
-        this.rules.add(new ClearInventoryOnLeave<T,U>());
-        this.rules.add(new UnregisterPlayerLeave<T,U>());
-        this.rules.add(new PlayerJoinLobbyRule<T,U>(this.spawn)
+        this.addRule(new NoBlockRule<T,U>());
+        this.addRule(new NoDamageRule<T,U>());
+        this.addRule(new NoStarvationRule<T,U>());
+        this.addRule(new ChooseTeamRule<T,U>());
+        this.addRule(new PreventDaylightCycleRule<T,U>());
+        this.addRule(new ClearInventoryOnLeave<T,U>());
+        this.addRule(new UnregisterPlayerLeave<T,U>());
+        this.addRule(new NoInventoryClickRule<>());
+        this.addRule(new PlayerJoinLobbyRule<T,U>(this.spawn)
                 .setShouldStartWhenEnoughPlayer(this.options.shouldAutoStartWhenEnoughPlayer)
                 .setMinimumPlayerNeeded(this.options.numberOfPlayerToStart));
     }
