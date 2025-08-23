@@ -3,7 +3,7 @@ package ch.shai.cs3.craftmine.rule;
 import ch.shai.cs3.craftmine.player.CraftMineGamePlayer;
 import ch.shai.cs3.craftmine.team.CraftMineGameTeam;
 import ch.shai.cs3.game.state.rule.GameStateRule;
-import net.kyori.adventure.text.Component;
+import ch.shai.cs3.utils.logger.LoggerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -18,7 +18,7 @@ public class NoMoveAtStartRule extends GameStateRule<CraftMineGamePlayer, CraftM
     @Override
     public void onLoad() {
         super.onLoad();
-        Bukkit.broadcast(Component.text("Le jeu va commencer dans 5 secondes"));
+        LoggerUtils.announce( "Le jeu va commencer dans 5 secondes");
         Bukkit.getScheduler().runTaskLater(this.getState().getGame().getPlugin(), new NoMoveAtStartRuleRunnable(this),5 * 20);
     }
 
@@ -32,7 +32,7 @@ public class NoMoveAtStartRule extends GameStateRule<CraftMineGamePlayer, CraftM
         @Override
         public void run() {
             this.rule.disable();
-            Bukkit.broadcast(Component.text("Le jeu commence"));
+            LoggerUtils.announce("Le jeu commence");
         }
     }
 }

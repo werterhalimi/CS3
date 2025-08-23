@@ -4,7 +4,6 @@ import ch.shai.cs3.craftmine.player.CraftMineGamePlayer;
 import ch.shai.cs3.craftmine.team.CraftMineGameTeam;
 import ch.shai.cs3.game.state.rule.GameStateRule;
 import ch.shai.cs3.utils.structure.SquareStructure;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,7 +29,6 @@ public class TeamCanLeaveRule extends GameStateRule<CraftMineGamePlayer, CraftMi
 
     @EventHandler
     public void onEnterEndPortal(EntityPortalEnterEvent event){
-        Bukkit.broadcastMessage(event.getPortalType().name());
         CraftMineGameTeam portalTeam = this.getTeamPortal(event.getLocation());
 
 
@@ -44,11 +42,13 @@ public class TeamCanLeaveRule extends GameStateRule<CraftMineGamePlayer, CraftMi
                 }
                 if (portalTeam != player.getTeam()){
                     event.setCancelled(true);
-                    player.getBukkitPlayer().sendMessage("Felicitation mais ce portail n'est pas de la bonne couleur.");
+                    player.sendMessage("Felicitation mais ce portail n'est pas de la bonne couleur.");
+                    player.getBukkitPlayer().teleport(portalTeam.getSpawnPoint());
                     return ;
                 }
                 player.setPlaying(false);
                 player.getBukkitPlayer().setGameMode(GameMode.SPECTATOR);
+                player.sendMessage("Tu as quitter le jeu.");
             }
         }
     }

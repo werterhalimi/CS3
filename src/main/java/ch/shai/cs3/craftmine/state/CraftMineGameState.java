@@ -9,12 +9,13 @@ import ch.shai.cs3.game.state.rule.sample.WorldBorderRule;
 import org.bukkit.Bukkit;
 
 public class CraftMineGameState extends GameState<CraftMineGamePlayer, CraftMineGameTeam> {
+    public final static int WORLD_BORDER_SIZE = 1000;
     public CraftMineGameState(){
         this.rules.add(new MurderHealthPerturbationRule());
         this.rules.add(new NoMoveAtStartRule());
         this.rules.add(new ItemSpawnWithGradeRule());
         this.rules.add(new UpdateValueOnInventoryEventRule());
-        this.rules.add(new WorldBorderRule<CraftMineGamePlayer, CraftMineGameTeam>(500));
+        this.rules.add(new WorldBorderRule<CraftMineGamePlayer, CraftMineGameTeam>(CraftMineGameState.WORLD_BORDER_SIZE));
         this.rules.add(new TeamCanLeaveRule());
         this.rules.add(new PlayerRespawnTeamSpawnPointRule<CraftMineGamePlayer, CraftMineGameTeam>());
     }
@@ -23,6 +24,7 @@ public class CraftMineGameState extends GameState<CraftMineGamePlayer, CraftMine
     public void onLoad() {
         for (CraftMineGamePlayer player : this.game.getPlayers()) {
             player.getBukkitPlayer().teleport(player.getTeam().getSpawnPoint());
+            player.getBukkitPlayer().getInventory().clear();
         }
     }
 }
