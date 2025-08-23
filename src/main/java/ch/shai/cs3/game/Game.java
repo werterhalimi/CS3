@@ -1,9 +1,12 @@
 package ch.shai.cs3.game;
 
 import ch.shai.cs3.commands.StartCommand;
+import ch.shai.cs3.commands.TeamUtilsCommand;
 import ch.shai.cs3.game.player.GamePlayer;
 import ch.shai.cs3.game.state.GameState;
 import ch.shai.cs3.game.team.GameTeam;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -24,11 +27,13 @@ public abstract class Game<
     protected List<U> teams;
     protected List<T> players;
     protected World world;
+    protected String name;
+    protected Component prefixComponent;
     private JavaPlugin plugin;
 
 
 
-    public Game(JavaPlugin plugin, GameState<T,U> currentState) {
+    public Game(JavaPlugin plugin, GameState<T,U> currentState, String name) {
         this.plugin = plugin;
         this.currentState = currentState;
         this.states = new ArrayList<>();
@@ -36,6 +41,8 @@ public abstract class Game<
         this.players = new ArrayList<>();
         this.states.add(this.currentState);
         this.world = Bukkit.getWorlds().get(0);
+        this.name = name;
+        this.prefixComponent = MiniMessage.miniMessage().deserialize("<gray>[<gold>" + this.getName() + "<gray>]</gray>: </white>");
     }
 
     public Game(JavaPlugin plugin) {
@@ -45,6 +52,7 @@ public abstract class Game<
         this.players = new ArrayList<>();
         this.world = Bukkit.getWorlds().get(0);
         Bukkit.getPluginCommand("start").setExecutor(new StartCommand<T,U>(this));
+        Bukkit.getPluginCommand("teamutils").setExecutor(new TeamUtilsCommand<>(this));
     }
 
     public void enable(){
@@ -55,9 +63,11 @@ public abstract class Game<
         this.setState(this.getNextState());
     }
 
-    public void addState(GameState state){
+    public void addState(GameState<T,U> state){
         this.states.add(state);
     }
+
+    public abstract U createTeam();
 
     public void registerEvent(Listener listener){
         Bukkit.getServer().getPluginManager().registerEvents(listener, this.getPlugin());
@@ -113,6 +123,14 @@ public abstract class Game<
 
     public List<T> getPlayers() {
         return players;
+    }
+
+    public Component getPrefix(){
+        return this.prefixComponent;
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public World getWorld() {
