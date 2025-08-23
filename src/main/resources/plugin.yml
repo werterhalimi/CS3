@@ -8,3 +8,4 @@ api-version: '1.21.8'
 load: POSTWORLD
 commands:
   start:
+  teamutils:
