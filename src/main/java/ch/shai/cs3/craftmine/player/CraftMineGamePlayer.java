@@ -2,8 +2,6 @@ package ch.shai.cs3.craftmine.player;
 
 import ch.shai.cs3.game.Game;
 import ch.shai.cs3.game.player.GamePlayer;
-import net.kyori.adventure.bossbar.BossBar;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 public class CraftMineGamePlayer extends GamePlayer {
@@ -20,5 +18,4 @@ public class CraftMineGamePlayer extends GamePlayer {
         this.player.sendActionBar("Valeur de l'inventaire: " + this.inventoryValue);
         this.sendMessage("Valeur de l'inventaire: " + this.inventoryValue);
     }
-
 }
