@@ -4,7 +4,6 @@ import ch.shai.cs3.game.Game;
 import ch.shai.cs3.game.player.GamePlayer;
 import ch.shai.cs3.game.state.rule.GameStateRule;
 import ch.shai.cs3.game.team.GameTeam;
-import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +16,11 @@ public abstract class GameState<T extends GamePlayer, U extends GameTeam> {
 
     public GameState() {
         this.rules = new ArrayList<>();
+    }
+
+    public GameState<T, U> addRule(GameStateRule<T,U> rule){
+        this.rules.add(rule);
+        return this;
     }
 
     public void loadRules(Game<T, U> game){
