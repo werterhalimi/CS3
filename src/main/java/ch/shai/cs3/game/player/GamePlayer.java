@@ -2,7 +2,10 @@ package ch.shai.cs3.game.player;
 
 import ch.shai.cs3.game.Game;
 import ch.shai.cs3.game.team.GameTeam;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
+
+import net.kyori.adventure.text.Component;
 
 public abstract class GamePlayer {
     protected Player player;
@@ -39,5 +42,12 @@ public abstract class GamePlayer {
 
     public boolean isPlaying() {
         return isPlaying;
+    }
+
+    public void sendMessage(String message){
+        this.sendMessage(MiniMessage.miniMessage().deserialize(message));
+    }
+    public void sendMessage(Component message){
+        this.getBukkitPlayer().sendMessage(this.game.getPrefix().append(message));
     }
 }
