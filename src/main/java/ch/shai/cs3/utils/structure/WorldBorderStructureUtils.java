@@ -6,29 +6,44 @@ import org.bukkit.WorldBorder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class WorldBorderStructureUtils {
     public static List<Location> getEquidistantPointsInBorder(World world, int n) {
-        List<Location> points = new ArrayList<>();
-        if (world == null || n <= 0) {
-            return points; // Retourne une liste vide si les paramètres sont invalides
-        }
+        List<Location> locations = new ArrayList<>();
+        Random random = new Random();
 
-        // Récupère la bordure du monde
         WorldBorder border = world.getWorldBorder();
-        double centerX = border.getCenter().getX();
-        double centerZ = border.getCenter().getZ();
-        double size = border.getSize(); // Diamètre de la bordure
-        double radius = (size / 2) * 0.97; // Réduit de 3% pour la marge
+        double size = border.getSize() - 10; // marge de sécurité
+        Location center = border.getCenter();
+        double half = size / 2.0;
 
-        // Calcule les angles pour une répartition circulaire
-        for (int i = 0; i < n; i++) {
-            double angle = 2 * Math.PI * i / n; // Angle en radians pour chaque point
-            double x = centerX + radius * Math.cos(angle); // Coordonnée X
-            double z = centerZ + radius * Math.sin(angle); // Coordonnée Z
-            points.add(new Location(world, x, world.getHighestBlockYAt((int) x ,(int) z), z));
+        int attempts = 0;
+        while (locations.size() < n && attempts < n * 1000) { // limite pour éviter boucle infinie
+            attempts++;
+
+            // Générer coord aléatoire dans la zone
+            double x = center.getX() + (random.nextDouble() * 2 - 1) * half;
+            double z = center.getZ() + (random.nextDouble() * 2 - 1) * half;
+
+            // Trouver la hauteur de la surface
+            int y = world.getHighestBlockYAt((int) x, (int) z);
+            Location candidate = new Location(world, x, y, z);
+
+            // Vérifier distance minimale par rapport aux autres
+            boolean valid = true;
+            for (Location loc : locations) {
+                if (loc.distance(candidate) < size / n) { // critère d'éloignement
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (valid) {
+                locations.add(candidate.add(0.5, 1, 0.5)); // centrer et mettre au-dessus du bloc
+            }
         }
 
-        return points;
+        return locations;
     }
 }
