@@ -5,7 +5,6 @@ import ch.shai.cs3.game.state.GameState;
 import ch.shai.cs3.game.state.rule.sample.*;
 import ch.shai.cs3.game.team.GameTeam;
 import ch.shai.cs3.utils.structure.SquareStructure;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
