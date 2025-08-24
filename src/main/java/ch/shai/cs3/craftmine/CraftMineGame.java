@@ -8,18 +8,30 @@ import ch.shai.cs3.game.Game;
 import ch.shai.cs3.game.state.sample.hub.HubGameState;
 import ch.shai.cs3.game.state.sample.hub.HubGameStateOption;
 import org.bukkit.DyeColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 public class CraftMineGame extends Game<CraftMineGamePlayer, CraftMineGameTeam> {
+    private ConcurrentHashMap<Material, Long> blockCounts;
+
     public CraftMineGame(JavaPlugin plugin) {
-        super(plugin);
+        super(plugin, "CraftMine");
         this.addState(new WorldGenerationState());
         this.addState(new HubGameState<CraftMineGamePlayer, CraftMineGameTeam>(this.getWorld().getSpawnLocation().add(0,40,0),new HubGameStateOption()));
         this.addState(new CraftMineGameState());
         this.teams.add(new CraftMineGameTeam("Les verts !", DyeColor.GREEN,this.getWorld().getSpawnLocation() ));
         this.teams.add(new CraftMineGameTeam("Les bleus !", DyeColor.BLUE,this.getWorld().getSpawnLocation() ));
         this.teams.add(new CraftMineGameTeam("Les jaunes !", DyeColor.YELLOW, this.getWorld().getSpawnLocation()));
+    }
+
+    public void setBlockCounts(ConcurrentHashMap<Material, Long> blockCounts) {
+        this.blockCounts = blockCounts;
+    }
+    public ConcurrentHashMap<Material, Long> getBlockCounts() {
+        return blockCounts;
     }
 
     @Override
