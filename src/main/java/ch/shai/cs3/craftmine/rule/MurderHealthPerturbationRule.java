@@ -5,7 +5,7 @@ import ch.shai.cs3.craftmine.team.CraftMineGameTeam;
 import ch.shai.cs3.game.state.rule.GameStateRule;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.damage.DamageSource;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -18,7 +18,7 @@ public class MurderHealthPerturbationRule extends GameStateRule<CraftMineGamePla
 
     @EventHandler
     public void onPlayerDie(PlayerDeathEvent event){
-        DamageSource source = event.getDamageSource();
+        Entity source = event.getDamageSource().getCausingEntity();
         if (source instanceof Player){
             this.incrementPlayerMaxHealth(event.getPlayer());
             this.decrementPlayerMaxHealth(((Player) source));
