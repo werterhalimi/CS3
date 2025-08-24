@@ -6,7 +6,6 @@ import ch.shai.cs3.craftmine.team.CraftMineGameTeam;
 import ch.shai.cs3.game.state.GameState;
 import ch.shai.cs3.game.state.rule.sample.PlayerRespawnTeamSpawnPointRule;
 import ch.shai.cs3.game.state.rule.sample.WorldBorderRule;
-import org.bukkit.Bukkit;
 
 public class CraftMineGameState extends GameState<CraftMineGamePlayer, CraftMineGameTeam> {
     public final static int WORLD_BORDER_SIZE = 1000;
