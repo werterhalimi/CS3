@@ -60,7 +60,7 @@ public class TeamCanLeaveRule extends GameStateRule<CraftMineGamePlayer, CraftMi
             Location location = locations.get(i);
             CraftMineGameTeam team = this.getState().getGame().getTeams().get(i);
 
-            team.setSpawnPoint(location.clone().add(0, 2, 1));
+            team.setSpawnPoint(location.clone().add(0, 2.5, 1));
 
             SquareStructure.createRoom(location.clone().add(5, 1, 5), location.clone().add(-5,-4,-5), getColoredWool(team.getColor()).getType());
             SquareStructure.createFilledCube(location.clone().add(-1,-4,-1),location.clone().add(1,-4,1),Material.END_PORTAL);
