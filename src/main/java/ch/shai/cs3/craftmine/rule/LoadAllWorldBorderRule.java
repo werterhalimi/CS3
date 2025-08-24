@@ -1,5 +1,6 @@
 package ch.shai.cs3.craftmine.rule;
 
+import ch.shai.cs3.craftmine.CraftMineGame;
 import ch.shai.cs3.craftmine.player.CraftMineGamePlayer;
 import ch.shai.cs3.craftmine.team.CraftMineGameTeam;
 import ch.shai.cs3.game.state.rule.GameStateRule;
@@ -17,13 +18,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
-import static ch.shai.cs3.utils.chunk.ChunkUtils.getOneBlockPerChunkInWorldBorder;
 
 public class LoadAllWorldBorderRule extends GameStateRule<CraftMineGamePlayer, CraftMineGameTeam> {
     @Override
     public void onLoad() {
-        ChunkGeneratorRunnable runnable = new ChunkGeneratorRunnable(this.getState().getGame().getWorld(), 10, () -> {
+        ChunkGeneratorRunnable runnable = new ChunkGeneratorRunnable(this.getState().getGame().getWorld(), 10, (ConcurrentHashMap<Material, Long> blockCounts) -> {
+            if (this.state.getGame() instanceof CraftMineGame)
+                ((CraftMineGame) this.state.getGame()).setBlockCounts(blockCounts);
             this.getState().getGame().endCurrentState();
         });
         runnable.runTaskTimer(this.getState().getGame().getPlugin(), 1L, 1L);
@@ -43,7 +46,7 @@ public class LoadAllWorldBorderRule extends GameStateRule<CraftMineGamePlayer, C
         private int currentChunkX;
         private int currentChunkZ;
         private int broadcastIndex = 0;
-        private Runnable resolveCallback;
+        private Consumer<ConcurrentHashMap<Material, Long>> resolveCallback;
         private final ConcurrentHashMap<Material, Long> blockCounts = new ConcurrentHashMap<>();
         private final List<Integer> broadcastIndices;
         private long startTime;
@@ -52,7 +55,7 @@ public class LoadAllWorldBorderRule extends GameStateRule<CraftMineGamePlayer, C
             this(world, chunksPerTickLimit, null);
         }
 
-        public ChunkGeneratorRunnable(World world, int chunksPerTickLimit, Runnable resolveCallback) {
+        public ChunkGeneratorRunnable(World world, int chunksPerTickLimit, Consumer<ConcurrentHashMap<Material, Long>> resolveCallback) {
             this.world = world;
             this.startTime = System.currentTimeMillis();
             this.chunksPerTickLimit = chunksPerTickLimit;
@@ -128,7 +131,7 @@ public class LoadAllWorldBorderRule extends GameStateRule<CraftMineGamePlayer, C
                         // Afficher le temps total
                         Bukkit.broadcast(Component.text("Temps total : " + (elapsed / 1000.0) + " secondes"));
 
-                        if (this.resolveCallback != null) this.resolveCallback.run();
+                        if (this.resolveCallback != null) this.resolveCallback.accept(this.blockCounts);
                         this.cancel();
                     }
                 });
